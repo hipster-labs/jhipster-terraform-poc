@@ -19,3 +19,17 @@ Goal: provide Terraform scripts to create the cloud infrastructure to deploy a J
 ### AWS
 
 - [aws CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
+
+## Quickstart instruction
+
+### GCP
+
+Login to GCP and import temporary auth token to your shell environment:
+
+    gcloud auth application-default login 
+    export GOOGLE_OAUTH_ACCESS_TOKEN=$(gcloud auth print-access-token)
+    
+Apply the terraform:
+
+    cd live/gcp/demo
+    terragrunt apply
