@@ -109,3 +109,15 @@ module "gke" {
     ]
   }
 }
+
+module "database" {
+  source = "../database"
+
+  name   = var.name
+  region = var.region
+  database_version = "POSTGRES_12"
+  network_self_link = module.vpc.network_self_link
+  database_name = "jhipster"
+  database_user = "jhipster"
+  database_password = "jhipster"
+}
