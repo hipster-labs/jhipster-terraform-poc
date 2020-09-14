@@ -1,0 +1,10 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: default-full-access
+  namespace: default
+rules:
+- apiGroups: [""]
+  resources: ["*"]
+  # verbs: ["create, delete, replace, apply, logs, get, rollout, edit, watch, config, describe"]
+  verbs: ["*"]
