@@ -2,7 +2,7 @@ module "enable_gcp_apis" {
   source = "../enable_gcp_apis"
 
   project = var.project
-  apis_to_enable = ["compute.googleapis.com"]
+  apis_to_enable = ["compute.googleapis.com", "servicenetworking.googleapis.com"]
 }
 
 module "vpc" {
@@ -120,4 +120,6 @@ module "database" {
   database_name = "jhipster"
   database_user = "jhipster"
   database_password = "jhipster"
+
+  depends_on = [module.enable_gcp_apis]
 }
