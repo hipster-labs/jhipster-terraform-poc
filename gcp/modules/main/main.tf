@@ -15,24 +15,40 @@ module "vpc" {
 
   subnets = [
     {
-      subnet_name           = "subnet-01"
-      subnet_ip             = "10.10.10.0/24"
+      subnet_name           = "kubernetes-subnet"
+      subnet_ip             = "10.5.0.0/20"
       subnet_region         = var.region
       description           = "JHipster subnet 01"
-    },
+    }
+  ]
+
+  secondary_ranges = {
+    "kubernetes-subnet" = [
+      {
+        range_name    = "kubernetes-pod-subnet"
+        ip_cidr_range = "10.0.0.0/14"
+      },
+      {
+        range_name    = "kubernetes-service-subnet"
+        ip_cidr_range =  "10.4.0.0/19"
+      },
+    ]
+  }
+  /*
+  ,
     {
-      subnet_name           = "subnet-02"
-      subnet_ip             = "10.10.20.0/24"
+      subnet_name           =
+      subnet_ip             =
       subnet_region         = var.region
       description           = "JHipster subnet 02"
     },
     {
-      subnet_name           = "subnet-03"
-      subnet_ip             = "10.10.30.0/24"
+      subnet_name           =
+      subnet_ip             =
       subnet_region         = var.region
       description           = "JHipster subnet 03"
     }
-  ]
+    */
 
   routes = [
     {
@@ -58,13 +74,14 @@ module "gke" {
   name                       = "${var.name}-kubernetes-cluster"
   region                     = var.region
   zones                      = [var.zone] // TODO add multi-zone option as it is more expense
-  network                    = var.network
-  subnetwork                 = "subnet-01"
-  ip_range_pods              = "subnet-02"
-  ip_range_services          = "subnet-03"
+  network                    = module.vpc.network_name
+  subnetwork                 = "kubernetes-subnet"
+  ip_range_pods              = module.vpc.subnets_secondary_ranges[0][0].range_name
+  ip_range_services          = module.vpc.subnets_secondary_ranges[0][1].range_name
   http_load_balancing        = true
   horizontal_pod_autoscaling = true
   network_policy             = true
+  remove_default_node_pool   = true
 
   node_pools = [
     {
