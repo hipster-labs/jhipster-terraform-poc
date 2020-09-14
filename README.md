@@ -31,5 +31,5 @@ Login to GCP and import temporary auth token to your shell environment:
     
 Apply the terraform:
 
-    cd live/gcp/demo
+    cd live/gcp-demo/main
     terragrunt apply
