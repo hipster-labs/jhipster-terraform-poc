@@ -7,6 +7,13 @@ module "main" {
   rg_name     = "${var.rg_name}"
 }
 
+module "network" {
+  source   = "./modules/network"
+  location = "${var.location}"
+  app_name = "${var.app_name}"
+  rg_name  = "${var.rg_name}"
+}
+
 module "vk8s" {
   source         = "./modules/vk8s"
   rg_name        = "${var.rg_name}"
@@ -32,5 +39,19 @@ module "acr" {
   location       = "${var.location}"
   environment    = "${var.environment}"
   owner          = "${var.owner}"
+}
+
+module "postgres" {
+  source              = "./modules/postgres"
+  name                = "${var.app_name}"
+  location            = "${var.location}"
+  resource_group_name = "${var.rg_name}"
+}
+
+module "mysql" {
+  source              = "./modules/mysql"
+  name                = "${var.app_name}"
+  location            = "${var.location}"
+  resource_group_name = "${var.rg_name}"
 }
 

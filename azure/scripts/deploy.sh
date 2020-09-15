@@ -40,6 +40,20 @@ if [ $1 == "-plan-main" ]; then
     terragrunt plan -var-file=./envs/values.tfvars -target module.main
 fi
 
+if [ $1 == "-plan-network" ]; then
+    echo "----------------------------------------------------"
+    echo -n "| ${GREEN} Running terraform plan ... ${RESET}"
+    echo "----------------------------------------------------"
+    terragrunt plan -var-file=./envs/values.tfvars -target module.network
+fi
+
+if [ $1 == "-plan-acr" ]; then
+    echo "----------------------------------------------------"
+    echo -n "| ${GREEN} Running terraform plan ... ${RESET}"
+    echo "----------------------------------------------------"
+    terragrunt plan -var-file=./envs/values.tfvars -target module.acr
+fi
+
 if [ $1 == "-plan-vk8s" ]; then
     echo "----------------------------------------------------"
     echo -n "| ${GREEN} Running terraform plan ... ${RESET}"
